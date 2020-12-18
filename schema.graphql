@@ -1,0 +1,13 @@
+type User {
+  uid: String! @unique
+  families: [Family] @relation
+}
+
+type Family {
+  name: String!
+  users: [User] @relation
+}
+
+type Query {
+  findUserByUID(uid: String!): User!
+}
