@@ -1,36 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { User } from '../commonPropTypes';
+import { UserContext } from '../context/userContext';
 
-export default function Home({ user }) {
+export default function Home() {
   const router = useRouter();
+  const { state } = useContext(UserContext);
 
   useEffect(() => {
-    if (user && user.families.data.length) {
-      router.replace('/family');
+    const familyId = state.user?.families?.data?.[0]?._id;
+    if (familyId) {
+      router.replace(`/families/${familyId}`);
     }
-  }, [router, user]);
+  });
 
   return (
     <>
-      {!user && <p>Loading...</p>}
-      {user && (
-        <>
-          <h1>Welcome!</h1>
-          <p>
-            It doesn&apos;t look like you&apos;re a part of any families yet.
-            Ask your family administrator to add you, and then try again!
-          </p>
-        </>
-      )}
+      <h2>Welcome!</h2>
+      <p>
+        It doesn&apos;t look like you&apos;re a part of any families yet. Ask
+        your family administrator to add you, and then try again.
+      </p>
     </>
   );
 }
-
-Home.propTypes = {
-  user: User,
-};
-
-Home.defaultProps = {
-  user: {},
-};

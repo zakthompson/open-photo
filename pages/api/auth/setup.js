@@ -8,8 +8,11 @@ export default auth0.requireAuthentication(async (req, res) => {
     let dbUser = await fauna(`{
       findUserByUID(uid: "${user.sub}") {
         _id,
+        uid,
+        name,
         families {
           data {
+            _id,
             name,
             users {
               data {
@@ -24,8 +27,11 @@ export default auth0.requireAuthentication(async (req, res) => {
       dbUser = await fauna(`mutation {
         createUser(data: { uid: "${user.sub}" }) {
           _id,
+          uid,
+          name,
           families {
             data {
+              _id,
               name,
               users {
                 data {

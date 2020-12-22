@@ -1,4 +1,7 @@
 module.exports = {
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
   plugins: ['prettier'],
   extends: [
     'airbnb',
@@ -7,6 +10,7 @@ module.exports = {
     'prettier/react',
   ],
   globals: {
+    window: 'readonly',
     fetch: 'readonly',
   },
   rules: {

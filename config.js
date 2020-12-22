@@ -10,6 +10,8 @@ export default {
   cookieSecret: process.env.COOKIE_SECRET || '',
   faunaUrl: process.env.FAUNA_URL || 'https://graphql.fauna.com/graphql',
   faunaApiKey: process.env.FAUNA_API_KEY || '',
+  wasabiUrl: process.env.WASABI_URL || '',
+  wasabiBucket: process.env.WASABI_BUCKET || '',
 
   // client-side
   imagekitUrl: process.env.NEXT_PUBLIC_IMAGEKIT_URL || '',

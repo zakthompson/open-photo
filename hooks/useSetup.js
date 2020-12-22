@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
+import { UserContext } from '../context/userContext';
 
 export default function useSetup() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const { state, actions } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
@@ -19,7 +20,10 @@ export default function useSetup() {
           if (!data._id) {
             setErrors(data);
           } else {
-            setUser(data);
+            actions.setUser(data);
+            if (!data.name) {
+              router.replace('/name');
+            }
           }
         }
       } catch (e) {
@@ -28,8 +32,10 @@ export default function useSetup() {
       setIsLoading(false);
     }
 
-    fetchUser();
-  }, [router, setUser, setIsLoading, setErrors]);
+    if (!state.user) {
+      fetchUser();
+    }
+  }, [state, actions, router, setIsLoading, setErrors]);
 
-  return { user, isLoading, errors };
+  return { isLoading, errors };
 }

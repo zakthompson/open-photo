@@ -1,11 +1,36 @@
 type User {
   uid: String! @unique
+  name: String
   families: [Family] @relation
 }
 
 type Family {
   name: String!
   users: [User] @relation
+  photos: [Photo] @relation
+  galleries: [Gallery] @relation
+}
+
+type Photo {
+  name: String!
+  key: String! @unique
+  description: String
+  family: Family! @relation
+  creator: User! @relation
+  tags: [Tag] @relation
+  gallery: Gallery @relation
+}
+
+type Gallery {
+  name: String!
+  family: Family! @relation
+  creator: User! @relation
+  photos: [Photo] @relation
+}
+
+type Tag {
+  name: String!
+  photos: [Photo] @relation
 }
 
 type Query {
