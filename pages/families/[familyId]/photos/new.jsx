@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { Line } from 'rc-progress';
 import { useDropzone } from 'react-dropzone';
 import { UserContext } from '../../../../context/userContext';
 import { createPhoto, uploadToS3 } from '../../../../actions/photos';
@@ -25,7 +26,7 @@ export default function NewPhoto() {
   );
 
   const [files, setFiles] = useState([]);
-  const [uploads, setUploads] = useState([]);
+  const [uploads, setUploads] = useState({});
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
@@ -53,10 +54,10 @@ export default function NewPhoto() {
   });
 
   function updateProgress(index, progress) {
-    console.log(progress);
-    const newUploads = [...uploads];
-    newUploads[index] = { file: files[index], progress };
-    setUploads(newUploads);
+    setUploads((prev) => ({
+      ...prev,
+      [index]: { file: files[index], progress },
+    }));
   }
 
   const { mutate: getSignedUrl } = useMutation(createPhoto, {
@@ -147,17 +148,42 @@ export default function NewPhoto() {
   return (
     <>
       <h2>Upload Photos</h2>
-      <div>
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          <p>Drag and drop images here, or click to select files!</p>
-        </div>
-      </div>
-      {!!fileEls.length && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {fileEls}
-          <button type="submit">Submit</button>
-        </form>
+      {!Object.keys(uploads).length && (
+        <>
+          {!fileEls.length && (
+            <div>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Drag and drop images here, or click to select files!</p>
+              </div>
+            </div>
+          )}
+          {!!fileEls.length && (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {fileEls}
+              <button type="submit">Submit</button>
+            </form>
+          )}
+        </>
+      )}
+      {!!Object.keys(uploads).length && (
+        <>
+          {Object.keys(uploads).map((u) => {
+            const { file, progress } = uploads[u];
+            return (
+              <div key={file.name} className="mt-10">
+                <div>{file.name}</div>
+                <Line
+                  percent={`${Math.round(
+                    (progress.loaded * 100) / progress.total,
+                  )}`}
+                  strokeWidth="2"
+                  strokeColor="#00FF00"
+                />
+              </div>
+            );
+          })}
+        </>
       )}
     </>
   );

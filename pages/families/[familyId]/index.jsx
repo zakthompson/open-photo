@@ -18,19 +18,26 @@ export default function Family() {
   return (
     <>
       <h2>Latest Photos</h2>
-      <div className="flex flex-wrap items-stretch">
+      <div className="flex flex-wrap items-stretch justify-center px-24">
         {!isLoading &&
           !error &&
           data.map((p) => (
             <div
               key={p._id}
-              className="h-64 overflow-hidden rounded bg-grey-400"
+              className="h-64 mx-2 mt-4 overflow-hidden rounded bg-grey-400"
             >
               <LazyImage
                 key={p._id}
-                src={imagekit.url({ path: p.key })}
+                src={imagekit.url({
+                  path: p.key,
+                  transformation: [
+                    {
+                      height: '256',
+                    },
+                  ],
+                })}
                 alt={p.name}
-                layout="responsiveHeight"
+                objectFit="cover"
               />
             </div>
           ))}

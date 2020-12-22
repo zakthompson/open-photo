@@ -19,6 +19,7 @@
     "postcss-import": "^14.0.0",
     "postcss-preset-env": "^6.7.0",
     "prop-types": "^15.7.2",
+    "rc-progress": "^3.1.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-dropzone": "^11.2.4",
