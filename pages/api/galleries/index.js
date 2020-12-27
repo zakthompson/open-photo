@@ -9,7 +9,14 @@ export default auth0.requireAuthentication(async (req, res) => {
         galleries {
           data {
             _id,
-            name
+            name,
+            photos {
+              data {
+                _id
+                name,
+                key,
+              }
+            }
           }
         }
       }

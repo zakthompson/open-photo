@@ -8,7 +8,7 @@ export async function getGalleries({ queryKey }) {
 
 export async function createGallery(gallery) {
   const res = await axios.post(`/api/galleries/create`, {
-    body: { gallery },
+    gallery,
   });
   return res.data;
 }

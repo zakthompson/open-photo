@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { updateUser } from '../actions/users';
 import { UserContext } from '../context/userContext';
+import Layout from '../components/Layout';
 
 export default function Name() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Name() {
   const { mutate } = useMutation(updateUser, {
     onSuccess: (updatedUser) => {
       actions.setUser(updatedUser);
-      router.push('/family');
+      router.push('/');
     },
   });
 
@@ -27,7 +28,7 @@ export default function Name() {
   }
 
   return (
-    <>
+    <Layout>
       <h2>Finish Up Your Profile</h2>
       <p>Enter the name you would like others to see you as across the app</p>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,6 +44,6 @@ export default function Name() {
         {errors.name && <div>This field is required</div>}
         <button type="submit">Submit</button>
       </form>
-    </>
+    </Layout>
   );
 }

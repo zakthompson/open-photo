@@ -117,13 +117,8 @@ export default function LazyImage({
       break;
     }
     case 'responsive': {
-      wrapperClassNames.push('relative');
-      imageClassNames.push('relative w-full h-auto');
-      break;
-    }
-    case 'responsiveHeight': {
       wrapperClassNames.push('relative h-full');
-      imageClassNames.push('relative h-full w-auto');
+      imageClassNames.push('relative w-full h-full');
       break;
     }
     default: {
@@ -200,7 +195,7 @@ LazyImage.defaultProps = {
   loading: 'lazy',
   className: null,
   objectFit: null,
-  objectPosition: null,
+  objectPosition: 'center',
   onLoad: null,
   layout: 'intrinsic',
   imageClassName: null,

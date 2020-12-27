@@ -11,6 +11,7 @@ module.exports = {
   ],
   globals: {
     window: 'readonly',
+    document: 'readonly',
     fetch: 'readonly',
   },
   rules: {
