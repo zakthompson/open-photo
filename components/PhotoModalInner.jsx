@@ -21,7 +21,7 @@ export default function PhotoModalInner({ close }) {
       });
 
   return (
-    <div className="absolute inset-0 flex flex-col w-full min-h-screen overflow-auto lg:relative lg:min-h-4/5 lg:w-5/6 lg:h-4/5 lg:flex-row">
+    <div className="absolute inset-0 flex flex-col w-full min-h-screen overflow-auto lg:min-h-0 lg:relative lg:min-h-4/5 lg:w-5/6 lg:h-4/5 lg:flex-row">
       <div className="relative flex justify-center flex-shrink-0 w-full h-auto mr-4 bg-black shadow-lg lg:items-center lg:rounded lg:w-2/3">
         {isLoading && <Loader />}
         {!isLoading && (
