@@ -1,16 +1,17 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { UserContext } from '../context/userContext';
+import { useQuery } from 'react-query';
+import { getCurrentUser } from '../actions/users';
 import Layout from '../components/Layout';
 import LazyImage from '../components/LazyImage';
 import Loader from '../components/Loader';
 
 export default function Home() {
   const router = useRouter();
-  const { state } = useContext(UserContext);
+  const { data: user } = useQuery('currentUser', getCurrentUser);
 
   useEffect(() => {
-    const familyId = state.user?.families?.data?.[0]?._id;
+    const familyId = user?.families?.data?.[0]?._id;
     if (familyId) {
       router.replace(`/families/${familyId}`);
     }
@@ -19,8 +20,8 @@ export default function Home() {
   return (
     <Layout>
       <div className="relative w-full h-full">
-        {!state.user && <Loader />}
-        {state.user && (
+        {!user && <Loader />}
+        {user && (
           <>
             <LazyImage
               src="/images/welcome.jpg"

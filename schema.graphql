@@ -35,4 +35,5 @@ type Tag {
 
 type Query {
   findUserByUID(uid: String!): User!
+  familyPhotosSortedByTsDesc(familyId: String!): [Photo] @resolver(name: "family_photos_sorted_by_ts_desc", paginated: true)
 }

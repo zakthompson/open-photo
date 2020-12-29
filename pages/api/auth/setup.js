@@ -16,7 +16,8 @@ export default auth0.requireAuthentication(async (req, res) => {
             name,
             users {
               data {
-                uid
+                uid,
+                name,
               }
             }
           }
@@ -35,7 +36,8 @@ export default auth0.requireAuthentication(async (req, res) => {
               name,
               users {
                 data {
-                  uid
+                  uid,
+                  name,
                 }
               }
             }

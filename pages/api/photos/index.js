@@ -5,28 +5,26 @@ export default auth0.requireAuthentication(async (req, res) => {
   const { familyId } = req.query;
   try {
     const familyRes = await fauna(`{
-      findFamilyByID(id: "${familyId}") {
-        photos {
-          data {
+      familyPhotosSortedByTsDesc(familyId: "${familyId}", _size: 50) {
+        data {
+          _id,
+          name,
+          key,
+          creator {
             _id,
+            uid,
             name,
-            key,
-            creator {
+          },
+          tags {
+            data {
               _id,
-              uid,
               name,
-            },
-            tags {
-              data {
-                _id,
-                name,
-              }
             }
           }
         }
       }
     }`);
-    res.status(200).json(familyRes.data.findFamilyByID.photos.data);
+    res.status(200).json(familyRes.data.familyPhotosSortedByTsDesc.data);
   } catch (e) {
     console.error(e);
     res.status(e.status || 400).end(e.message);

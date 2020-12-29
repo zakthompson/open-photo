@@ -1,12 +1,12 @@
 /* eslint-disable  react/jsx-props-no-spreading */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { useDropzone } from 'react-dropzone';
 import { CheckCircle } from 'react-feather';
-import { UserContext } from '../context/userContext';
 import { createPhoto, uploadToS3 } from '../actions/photos';
+import { getCurrentUser } from '../actions/users';
 import { getGalleries } from '../actions/galleries';
 import Modal from './Modal';
 import Button from './Button';
@@ -16,8 +16,8 @@ export default function UploadModal() {
   const { familyId } = router.query;
   const { galleryId } = router.query;
 
-  const { state } = useContext(UserContext);
-  const creatorId = state.user?._id;
+  const { data: user } = useQuery('currentUser', getCurrentUser);
+  const creatorId = user?._id;
 
   const { register, handleSubmit } = useForm();
 

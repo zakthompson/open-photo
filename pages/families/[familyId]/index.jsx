@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import Layout from '../../../components/Layout';
 import PhotoGrid from '../../../components/PhotoGrid';
+import Loader from '../../../components/Loader';
 import { getPhotos } from '../../../actions/photos';
 
 export default function Family() {
@@ -12,6 +13,7 @@ export default function Family() {
   const { data, error, isLoading } = useQuery(
     ['photos', { familyId }],
     getPhotos,
+    { enabled: !!familyId },
   );
 
   return (
@@ -21,7 +23,8 @@ export default function Family() {
           Latest Photos
         </h3>
         <div className="flex flex-wrap items-stretch">
-          {!isLoading && !error && <PhotoGrid photos={data} />}
+          {isLoading && <Loader />}
+          {!isLoading && !error && !!data && <PhotoGrid photos={data} />}
         </div>
       </section>
     </Layout>

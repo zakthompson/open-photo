@@ -10,6 +10,9 @@ export default function PhotoGrid({ photos }) {
           <Photo path={p.key} id={p._id} name={p.name} height={256} />
         </div>
       ))}
+      {!photos.length && (
+        <div className="font-thin text-center">No photos to display</div>
+      )}
     </div>
   );
 }

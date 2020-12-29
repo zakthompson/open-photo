@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
+import { getCurrentUser } from '../actions/users';
 import Link from './Link';
-import { UserContext } from '../context/userContext';
 
 export default function Header() {
   const router = useRouter();
-  const { state } = useContext(UserContext);
 
+  const { data: user } = useQuery('currentUser', getCurrentUser);
   const { familyId } = router.query;
 
   return (
     <div
       className={`flex items-end px-2 py-1 md:px-10 md:py-5 ${
-        state.user && !familyId ? 'justify-between' : ''
+        user && !familyId ? 'justify-between' : ''
       }`}
     >
       <Link href="/">
@@ -21,7 +22,7 @@ export default function Header() {
           <span className="font-thin uppercase">Photos</span>
         </h1>
       </Link>
-      {state.user && familyId && (
+      {user && familyId && (
         <div className="flex-1 hidden md:block">
           <Link
             href={`/families/${familyId}/galleries`}
@@ -31,7 +32,7 @@ export default function Header() {
           </Link>
         </div>
       )}
-      {state.user && (
+      {user && (
         <Link
           href="/api/auth/logout"
           className="hidden text-2xl text-light md:block"
