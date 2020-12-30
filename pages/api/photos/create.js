@@ -12,7 +12,7 @@ export default auth0.requireAuthentication(async (req, res) => {
   const base = uuid();
   const key = `${photo.familyId}/${base}/${photo.filename}`;
   const name = photo.name || photo.filename;
-  const { type } = photo;
+  const { description, type } = photo;
   const expires = 60 * 30;
   try {
     const presignedUrl = s3.getSignedUrl('putObject', {
@@ -24,11 +24,16 @@ export default auth0.requireAuthentication(async (req, res) => {
 
     const photoRes = await fauna(`mutation {
       createPhoto(data: {
-        name: "${name}",
         key: "${key}",
+        name: "${name}",
+        description: "${description}",
         family: { connect: "${photo.familyId}" },
         creator: { connect: "${photo.creatorId}" }
-        ${photo.galleryId ? `gallery: { connect: "${photo.galleryId}" }` : ''}
+        ${
+          photo.galleryId
+            ? `galleries: { connect: ["${photo.galleryId}"] }`
+            : ''
+        }
       }) {
         _id
       }

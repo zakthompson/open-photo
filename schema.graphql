@@ -18,7 +18,7 @@ type Photo {
   family: Family! @relation
   creator: User! @relation
   tags: [Tag] @relation
-  gallery: Gallery @relation
+  galleries: [Gallery] @relation
 }
 
 type Gallery {

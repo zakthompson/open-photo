@@ -25,6 +25,12 @@ export default function Family() {
         <div className="flex flex-wrap items-stretch">
           {isLoading && <Loader />}
           {!isLoading && !error && !!data && <PhotoGrid photos={data} />}
+          {!isLoading && error && (
+            <div className="m-auto font-thin">
+              There was a problem fetching photos. Please refresh the page to
+              try again.
+            </div>
+          )}
         </div>
       </section>
     </Layout>

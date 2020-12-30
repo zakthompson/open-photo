@@ -4,15 +4,13 @@ import Photo from './Photo';
 
 export default function PhotoGrid({ photos }) {
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap m-auto text-center">
       {photos.map((p) => (
         <div key={p._id} className="flex-grow h-64 p-1">
           <Photo path={p.key} id={p._id} name={p.name} height={256} />
         </div>
       ))}
-      {!photos.length && (
-        <div className="font-thin text-center">No photos to display</div>
-      )}
+      {!photos.length && <div className="font-thin">No photos to display</div>}
     </div>
   );
 }

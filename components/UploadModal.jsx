@@ -26,6 +26,7 @@ export default function UploadModal() {
   const { data: galleries } = useQuery(
     ['galleries', { familyId }],
     getGalleries,
+    { enabled: !!familyId },
   );
 
   const [files, setFiles] = useState([]);
@@ -78,6 +79,7 @@ export default function UploadModal() {
         onUploadProgress: updateProgress,
       });
       queryClient.invalidateQueries('photos');
+      queryClient.invalidateQueries('galleries');
     },
   });
 
@@ -181,11 +183,12 @@ export default function UploadModal() {
                     defaultValue={galleryId}
                   >
                     <option value={null}>None</option>
-                    {galleries.map((g) => (
-                      <option key={g._id} value={g._id}>
-                        {g.name}
-                      </option>
-                    ))}
+                    {galleries &&
+                      galleries.map((g) => (
+                        <option key={g._id} value={g._id}>
+                          {g.name}
+                        </option>
+                      ))}
                   </select>
                 </label>
               </div>

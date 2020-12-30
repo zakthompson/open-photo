@@ -19,6 +19,7 @@ export default function Galleries() {
   const { data, error, isLoading } = useQuery(
     ['galleries', { familyId }],
     getGalleries,
+    { enabled: !!familyId },
   );
 
   return (
@@ -34,6 +35,7 @@ export default function Galleries() {
           <ul className="flex-shrink-0 w-72">
             {!isLoading &&
               !error &&
+              data &&
               data.map((g, i) => (
                 <li key={g._id}>
                   <Link
@@ -47,21 +49,24 @@ export default function Galleries() {
               ))}
           </ul>
           <div className="flex items-center overflow-hidden">
-            {data.map(
-              (g, i) =>
-                showing === i &&
-                g.photos.data.slice(0, 5).map((p) => {
-                  const src = imagekit.url({
-                    path: p.key,
-                    transformation: [{ height: '128' }],
-                  });
-                  return (
-                    <div className="relative ml-2 overflow-hidden rounded">
-                      <LazyImage src={src} alt={p.name} layout="responsive" />
-                    </div>
-                  );
-                }),
-            )}
+            {!isLoading &&
+              !error &&
+              data &&
+              data.map(
+                (g, i) =>
+                  showing === i &&
+                  g.photos.data.slice(0, 5).map((p) => {
+                    const src = imagekit.url({
+                      path: p.key,
+                      transformation: [{ height: '128' }],
+                    });
+                    return (
+                      <div className="relative ml-2 overflow-hidden rounded">
+                        <LazyImage src={src} alt={p.name} layout="responsive" />
+                      </div>
+                    );
+                  }),
+              )}
           </div>
         </div>
         <NewGalleryModal />
