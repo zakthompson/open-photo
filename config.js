@@ -8,8 +8,7 @@ export default {
     process.env.LOGIN_REDIRECT || 'http://localhost:3000/api/auth/callback',
   logoutRedirect: process.env.LOGOUT_REDIRECT || 'http://localhost:3000',
   cookieSecret: process.env.COOKIE_SECRET || '',
-  faunaUrl: process.env.FAUNA_URL || 'https://graphql.fauna.com/graphql',
-  faunaApiKey: process.env.FAUNA_API_KEY || '',
+  faunaSecret: process.env.FAUNA_SECRET || '',
   wasabiUrl: process.env.WASABI_URL || '',
   wasabiBucket: process.env.WASABI_BUCKET || '',
 

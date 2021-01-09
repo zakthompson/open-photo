@@ -1,19 +1,17 @@
+import { query as q } from 'faunadb';
+import { create } from '../../../utils/fauna';
 import auth0 from '../../../utils/auth0';
-import fauna from '../../../utils/fauna';
 
 export default auth0.requireAuthentication(async (req, res) => {
   const { gallery } = req.body;
+  const { name, familyId, creatorId } = gallery;
   try {
-    const galleryRes = await fauna(`mutation {
-      createGallery(data: {
-        name: "${gallery.name}",
-        family: { connect: "${gallery.familyId}" },
-        creator: { connect: "${gallery.creatorId}" }
-      }) {
-        _id
-      }
-    }`);
-    res.status(201).json(galleryRes.data.createGallery);
+    const galleryRes = await create('galleries', {
+      name,
+      family: q.Ref(q.Collection('families'), familyId),
+      creator: q.Ref(q.Collection('users'), creatorId),
+    });
+    res.status(201).json(galleryRes);
   } catch (e) {
     console.error(e);
     res.status(e.status || 400).end(e.message);

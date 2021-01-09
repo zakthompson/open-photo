@@ -2,7 +2,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import Layout from '../../../../components/Layout';
-import PhotoGrid from '../../../../components/PhotoGrid';
 import Loader from '../../../../components/Loader';
 import { getGalleries } from '../../../../actions/galleries';
 
@@ -16,7 +15,7 @@ export default function Gallery() {
     getGalleries,
   );
 
-  const gallery = isLoading ? {} : data.find((g) => g._id === galleryId);
+  const gallery = data ? data.find((g) => g.id === galleryId) : {};
 
   return (
     <Layout>
@@ -26,7 +25,7 @@ export default function Gallery() {
           <>
             <h3 className="mb-2 text-left md:mb-10">{gallery.name}</h3>
             <div className="flex flex-wrap items-stretch">
-              <PhotoGrid photos={gallery.photos.data} />
+              <div>Photos</div>
             </div>
           </>
         )}

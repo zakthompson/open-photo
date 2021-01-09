@@ -17,7 +17,7 @@ export default function UploadModal() {
   const { galleryId } = router.query;
 
   const { data: user } = useQuery('currentUser', getCurrentUser);
-  const creatorId = user?._id;
+  const creatorId = user?.id;
 
   const { register, handleSubmit } = useForm();
 

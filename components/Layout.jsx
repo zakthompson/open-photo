@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Upload } from 'react-feather';
@@ -15,8 +15,19 @@ export default function Layout({ children }) {
   const router = useRouter();
   const { openModal } = useModal('upload');
 
-  const { error, isLoading } = useQuery('currentUser', getCurrentUser);
+  const { data: user, error, isLoading } = useQuery(
+    'currentUser',
+    getCurrentUser,
+  );
   const { familyId } = router.query;
+
+  useEffect(() => {
+    if (user && !user.name && router.asPath !== '/name') {
+      router.replace('/name');
+    } else if (router.asPath === '/name') {
+      router.push('/');
+    }
+  });
 
   return (
     <div className="flex flex-col h-full">

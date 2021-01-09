@@ -1,28 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { updateUser } from '../actions/users';
-import { UserContext } from '../context/userContext';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { getCurrentUser, updateUser } from '../actions/users';
 import Layout from '../components/Layout';
 
 export default function Name() {
-  const router = useRouter();
-  const { state, actions } = useContext(UserContext);
+  const queryClient = useQueryClient();
   const { register, handleSubmit, errors } = useForm();
+
+  const { data: user } = useQuery('currentUser', getCurrentUser);
   const { mutate } = useMutation(updateUser, {
-    onSuccess: (updatedUser) => {
-      actions.setUser(updatedUser);
-      router.push('/');
+    onSuccess: () => {
+      queryClient.invalidateQueries('currentUser');
     },
   });
 
-  const { _id, uid } = state.user;
+  const id = user?.id;
 
   function onSubmit({ name }) {
     mutate({
-      id: _id,
-      uid,
+      id,
       name,
     });
   }

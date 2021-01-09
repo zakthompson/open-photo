@@ -10,8 +10,8 @@ export default function Home() {
   const router = useRouter();
   const { data: user } = useQuery('currentUser', getCurrentUser);
 
+  const familyId = user?.families?.[0]?.id;
   useEffect(() => {
-    const familyId = user?.families?.data?.[0]?._id;
     if (familyId) {
       router.replace(`/families/${familyId}`);
     }
@@ -21,7 +21,7 @@ export default function Home() {
     <Layout>
       <div className="relative w-full h-full">
         {!user && <Loader />}
-        {user && (
+        {user && !familyId && (
           <>
             <LazyImage
               src="/images/welcome.jpg"

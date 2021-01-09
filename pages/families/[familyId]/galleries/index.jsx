@@ -37,9 +37,9 @@ export default function Galleries() {
               !error &&
               data &&
               data.map((g, i) => (
-                <li key={g._id}>
+                <li key={g.id}>
                   <Link
-                    href={`/families/${familyId}/galleries/${g._id}`}
+                    href={`/families/${familyId}/galleries/${g.id}`}
                     className="text-3xl font-thin transition-text-size hover:font-light"
                     onMouseEnter={() => setShowing(i)}
                   >

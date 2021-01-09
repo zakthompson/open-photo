@@ -14,7 +14,4 @@ module.exports = {
     document: 'readonly',
     fetch: 'readonly',
   },
-  rules: {
-    'no-underscore-dangle': 0,
-  },
 };

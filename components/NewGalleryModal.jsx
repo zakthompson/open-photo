@@ -15,7 +15,7 @@ export default function NewGalleryModal() {
   const queryClient = useQueryClient();
   const { data: user } = useQuery('currentUser', getCurrentUser);
 
-  const creatorId = user?._id;
+  const creatorId = user?.id;
   const { familyId } = router.query;
 
   const { mutate } = useMutation(createGallery, {
