@@ -55,7 +55,8 @@ export default function Galleries() {
               data.map(
                 (g, i) =>
                   showing === i &&
-                  g.photos.data.slice(0, 5).map((p) => {
+                  g.photos &&
+                  g.photos.slice(0, 5).map((p) => {
                     const src = imagekit.url({
                       path: p.key,
                       transformation: [{ height: '128' }],

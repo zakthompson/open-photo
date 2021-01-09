@@ -21,9 +21,7 @@ PhotoGrid.propTypes = {
       key: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
-      creator: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      }).isRequired,
+      creator: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

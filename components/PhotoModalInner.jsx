@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
 import { X, Download } from 'react-feather';
-import { getPhoto } from '../actions/photos';
+import usePhoto from '../hooks/usePhoto';
 import imagekit from '../utils/imagekit';
 import LazyImage from './LazyImage';
 import Loader from './Loader';
 
 export default function PhotoModalInner({ close }) {
-  const router = useRouter();
-  const { photoId } = router.query;
-
-  const { data, isLoading } = useQuery(['photo', { photoId }], getPhoto);
+  const { data, isLoading } = usePhoto();
 
   const src = isLoading
     ? ''
