@@ -18,6 +18,9 @@ export default function Layout({ children }) {
   const { data: user, error, isLoading } = useQuery(
     'currentUser',
     getCurrentUser,
+    {
+      refetchOnWindowFocus: false,
+    },
   );
   const { familyId } = router.query;
 

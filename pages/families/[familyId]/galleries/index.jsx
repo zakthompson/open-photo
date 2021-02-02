@@ -36,7 +36,7 @@ export default function Galleries() {
             {!isLoading &&
               !error &&
               data &&
-              data.map((g, i) => (
+              data.data.map((g, i) => (
                 <li key={g.id}>
                   <Link
                     href={`/families/${familyId}/galleries/${g.id}`}
@@ -52,7 +52,7 @@ export default function Galleries() {
             {!isLoading &&
               !error &&
               data &&
-              data.map(
+              data.data.map(
                 (g, i) =>
                   showing === i &&
                   g.photos &&

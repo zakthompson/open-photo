@@ -18,10 +18,16 @@ export default function PhotoGrid({ photos }) {
 PhotoGrid.propTypes = {
   photos: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      createdAt: PropTypes.number.isRequired,
       key: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
-      creator: PropTypes.string.isRequired,
+      creator: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        createdAt: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+      }).isRequired,
     }),
   ).isRequired,
 };

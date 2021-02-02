@@ -23,13 +23,30 @@ export default auth0.requireAuthentication(async (req, res) => {
       Expires: expires,
     });
 
-    const photoRes = await create('photos', {
-      key,
-      name,
-      description,
-      family: q.Ref(q.Collection('families'), familyId),
-      creator: q.Ref(q.Collection('users'), creatorId),
-    });
+    const photoRes = await create(
+      'photos',
+      {
+        key,
+        name,
+        description,
+        family: q.Ref(q.Collection('families'), familyId),
+        creator: q.Ref(q.Collection('users'), creatorId),
+      },
+      ['key', 'name', 'description'],
+      [
+        {
+          name: 'creator',
+          collection: 'users',
+          keys: ['name'],
+        },
+        {
+          name: 'galleries',
+          collection: 'galleries',
+          many: true,
+          keys: ['name'],
+        },
+      ],
+    );
 
     res.status(201).json({
       presignedUrl,

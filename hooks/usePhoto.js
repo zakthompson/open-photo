@@ -12,7 +12,7 @@ export default function usePhoto(id) {
     initialData: () => {
       return queryClient
         .getQueryData(['photos', { familyId }])
-        ?.find((d) => d.id === id);
+        ?.find((d) => d.id === photoId);
     },
   });
 

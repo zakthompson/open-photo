@@ -4,7 +4,20 @@ import { update } from '../../../utils/fauna';
 export default auth0.requireAuthentication(async (req, res) => {
   try {
     const { id, name } = req.body.user;
-    const userRes = await update('users', id, { name });
+    const userRes = await update(
+      'users',
+      id,
+      { name },
+      ['uid', 'name'],
+      [
+        {
+          name: 'families',
+          collection: 'families',
+          many: true,
+          keys: ['name'],
+        },
+      ],
+    );
     res.status(200).json(userRes);
   } catch (e) {
     console.error(e);

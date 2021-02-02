@@ -6,11 +6,27 @@ export default auth0.requireAuthentication(async (req, res) => {
   const { gallery } = req.body;
   const { name, familyId, creatorId } = gallery;
   try {
-    const galleryRes = await create('galleries', {
-      name,
-      family: q.Ref(q.Collection('families'), familyId),
-      creator: q.Ref(q.Collection('users'), creatorId),
-    });
+    const galleryRes = await create(
+      'galleries',
+      {
+        name,
+        family: q.Ref(q.Collection('families'), familyId),
+        creator: q.Ref(q.Collection('users'), creatorId),
+      },
+      ['name'],
+      [
+        {
+          name: 'creator',
+          collection: 'users',
+          keys: ['name'],
+        },
+        {
+          name: 'family',
+          collection: 'families',
+          keys: ['name'],
+        },
+      ],
+    );
     res.status(201).json(galleryRes);
   } catch (e) {
     console.error(e);
